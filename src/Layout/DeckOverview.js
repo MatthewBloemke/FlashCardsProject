@@ -9,6 +9,7 @@ const DeckOverview = () => {
     let {deckId} = useParams()
     
     let [deck, setDeck] = useState([]);
+    let [deckCards, setDeckCards] = useState([])
     useEffect(() => {
         let abort = new AbortController()
         async function loadDeck(){
@@ -17,6 +18,7 @@ const DeckOverview = () => {
                 temp = value;
             })
             setDeck(temp)
+            setDeckCards(temp.cards)
         }
         loadDeck()
     },[deckId])
@@ -43,7 +45,7 @@ const DeckOverview = () => {
             <button className='btn btn-primary'><Link style={{color: 'white', textDecoration: 'none'}} to ={`/decks/${deckId}/cards/new`}>Add Cards</Link></button>
             <button className='btn btn-danger' style={{float:'right'}} onClick={deleteDeckHandler}>Delete</button>
             <h2>Cards</h2>
-            <CardDisplay deckId={deckId}/>
+            <CardDisplay deckCards={deckCards} deckId={deckId}/>
 
         </div>
     )
